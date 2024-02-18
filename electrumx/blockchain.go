@@ -163,7 +163,11 @@ func (n *Node) BlockchainAddressGetMempool() error {
 //
 // https://electrumx.readthedocs.io/en/latest/protocol-methods.html#blockchain-scripthash-listunspent
 func (n *Node) BlockchainScripthashListUnspent(scriptHash string) ([]*Transaction, error) {
-	return nil, ErrNotImplemented
+	resp := &struct {
+		Result []*Transaction `json:"result"`
+	}{}
+	err := n.request("blockchain.address.listunspent", []interface{}{scriptHash}, resp)
+	return resp.Result, err
 }
 
 // BlockchainAddressListUnspent lists the unspent transactions for the given address.
