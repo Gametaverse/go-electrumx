@@ -162,11 +162,11 @@ func (n *Node) BlockchainAddressGetMempool() error {
 // method: "blockchain.scripthash.listunspent"
 //
 // https://electrumx.readthedocs.io/en/latest/protocol-methods.html#blockchain-scripthash-listunspent
-func (n *Node) BlockchainScripthashListUnspent(scriptHash string) ([]*Transaction, error) {
+func (n *Node) BlockchainScripthashListUnspent(ctx context.Context, scriptHash string) ([]*Transaction, error) {
 	resp := &struct {
 		Result []*Transaction `json:"result"`
 	}{}
-	err := n.request(context.Background, "blockchain.address.listunspent", []interface{}{scriptHash}, resp)
+	err := n.request(ctx, "blockchain.address.listunspent", []interface{}{scriptHash}, resp)
 	return resp.Result, err
 }
 
